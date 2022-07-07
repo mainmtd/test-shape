@@ -1,0 +1,22 @@
+version: '3.1'
+services:
+  app:
+    container_name: test-shape
+    image: test-shape
+    build: ./
+    ports:
+      - "5000:5000"
+      - "8000:8000"
+    depends_on:
+      - postgresqldb
+    environment:
+      RUN_IN_DEBUG: "true"
+      agentlib: jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000
+  postgresqldb:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=vessels_db
